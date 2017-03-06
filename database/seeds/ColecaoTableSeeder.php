@@ -27,5 +27,12 @@ class ColecaoTableSeeder extends Seeder
         $colecao->endereco = 'profissoes';
         $colecao->em_uso = false;
         $colecao->save();
+
+        $colecao = new Colecao;
+        $colecao->nome = 'Simuladores';
+        $colecao->nome_seletor = 'simuladores';
+        $colecao->endereco = 'simuladores';
+        $colecao->em_uso = false;
+        $colecao->save();
     }
 }

@@ -1,0 +1,11 @@
+﻿Digital Combat Simulator World (DCS World 1.5) is a free to play combat flight simulator developed by Eagle Dynamics (ED). It includes a free Sukhoi Su-25T attack aircraft and TF-51D Mustang, and is extensible through additional DCS modules as well as user-made add-ons and mods. While the Su-25T and TF-51D are free, modules produced by third parties and Eagle Dynamics are usually only available with a payment.
+
+DCS World features a large area of the Caucasus region that encompasses much of Georgia – the location of the Russo-Georgian war in 2008, as well as the Nevada Test and Training Range as of the DCS World 2 open alpha. Additional locations such as Iran, UAE, Oman (Strait of Hormuz) and period specific Normandy 1944 are all scheduled to release in 2017.[1]
+
+Additionally, DCS World includes: mission and campaign editors, online multiplayer, large inventory of air, land and sea combat units and weapons, AI player opponents, mission generator, dynamic weather and seasons, training missions, mission replay system and pilot log book.
+
+DCS modules that can plug into DCS World include aircraft, maps and ground units. Modules for DCS World include modules developed internally by Eagle Dynamics, as well as those by certified third party developers. The first third party aircraft to be introduced was the UH-1H Huey.
+
+Future and upcoming modules include the F/A-18C Hornet,[2] F-14 Tomcat,[3] P-47D Thunderbolt,[4]AV-8B Harrier[5] and various other aircraft.
+
+DCS World is in the process of enhancing its virtual reality technology support. Platforms it works with currently are TrackIR,[6] Oculus Rift,[7][8] and HTC Vive.[8][9] ED plans to continue working on improving support for VR.[10]

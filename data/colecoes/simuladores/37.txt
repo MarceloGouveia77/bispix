@@ -1,0 +1,15 @@
+﻿Steel Beasts is the name for a family of tank simulators created by eSim Games for Microsoft Windows.
+
+Its subject is contemporary combined arms tactics (with emphasis on modern armoured fighting vehicles) at a company scale. As a consumer game, it is a genre mix of strategy game, action game, simulation game, and wargame of fairly complex gameplay.
+
+Steel Beasts (More colloquially known as SB to its fans) is distinguished from other simulators by a faithful reproduction of tactical maneuvers and Fire Control Systems as well as various other military facets than when compared to other simulators. The sound samples are mostly authentic having been recorded from some of the actual armored fighting vehicles depicted in the sim.
+
+The two main crewable vehicles depicted in the original Steel Beasts are the German Leopard 2A4 and the American M1A1 Abrams, known as M1A1(HA); however, there are numerous NATO vehicles including M2 Bradleys and the Marder Infantry Fighting Vehicles, and support vehicles including the HMMWV and the M113 APC.
+
+Steel Beasts Pro has added to this family of crewable vehicles these being the Bradley and M113 (in most of its more widely known guises), with more military training contracts has led to the creation of more vehicles being modelled in the sim, these include the newer Leopard 2 A5 model and the CV9040 IFV, both of which are playable vehicles. In addition Steel Beasts also models helicopters.
+
+As a tactical simulation artillery is modelled in the sim and player can call in various types of artillery, from conventional smoke and high-explosive rounds, to DPICM and the FASCAM minefield system.
+
+SB also includes a scenario editor which allows for programming of random or condition-based behavior in the computer-controlled units. Well-designed SB scenarios therefore have a high degree of replayability. In addition to the scenario editor SB also contains a map editor for creating custom maps depicting different terrain types. In Fall of 2011, eSim Games announced that they were using xaitment's AI software for pathfinding, movement and behavior modeling.
+
+Customized versions of Steel Beasts have been adopted by the armies of Austria, Denmark, Sweden, Norway, Finland, Chile, Canada, Australia, Spain and USA for training purposes.

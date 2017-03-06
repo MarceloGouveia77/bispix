@@ -1,0 +1,9 @@
+﻿Europa Universalis II is a strategy computer game developed by Paradox Development Studio and published by Strategy First, based on world history spanning a timeline between 1419 through 1820. It was first released on December 11, 2001.
+
+In the game, the player controls a single nation across many centuries, managing its economy, military, political alliances, scientific development, exploration and colonization, religious affairs, and internal stability. In addition, yearly random events, as well as hundreds of pre-scripted ones based on the historical record, make for a great deal of gameplay challenge and variety.
+
+Europa Universalis II differs from many similar turn-based strategy games in that time flows continuously during gameplay, rather than taking place in discrete turns. The player is able to pause the action to ponder the situation and give orders, then speed up or slow down time to let events take their course.
+
+The game ships with several historical scenarios, including games that take place during the Age of Exploration, the American Revolution, and the Napoleonic Wars. The Grand Campaign lets players choose one world power and guide it from the end of the Middle Ages and into the 19th century. There is also a Fantasy Scenario, starting in an unoccupied and unexplored earth with only 8 civilizations to choose. In this scenario, casual gameplay and strategy that should be applied are slightly different, more like a 4X game with a strong emphasis on colonization.
+
+While the Grand Campaign is geared primarily towards the major European powers of the time, such as Austria, England, France, Poland, Portugal, Russia, Spain, Sweden, and Ottoman Empire, the game is unique in that players can choose to play as one of more than a hundred obscure, no longer existing nations, from the Indian subcontinent to the Balkans.

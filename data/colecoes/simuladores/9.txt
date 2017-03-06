@@ -1,0 +1,14 @@
+﻿Odell Lake was an early educational life simulation game, produced by MECC for the Apple II and Commodore 64 computers.[2] In the game, the player is a fish living in Odell Lake, a real-world lake in Oregon.[2] It was followed up by the game Odell Down Under.
+
+As a fish, the player could "go exploring" or "play for points".[2] The object was to decide which fish to eat, while trying to survive and avoid other enemies; such as otters, ospreys, and bait from fishermen. When simply exploring, the player could select from six different species of fish, such as Mackinaw Trout, Whitefish, or Rainbow Trout; however, when playing for points, the computer randomly assigned the type of fish that the player will play as. In addition, the titles for each of the types of fish and other creatures are removed when playing for points, forcing the player to rely on memory; also the game was timed. After every five moves, the player played as a different type of fish.
+
+When playing for points, the best decision netted the player the most points, with less intelligent decisions earning the player fewer or no points, or in the case of the fish eating something disagreeable, actually taking them away. If no decision was made when time ran out, it counted as "Ignore". If at any time the player's fish was attacked by an enemy, or the player got caught by an angler, the game ended immediately.Other species[edit]
+In addition to the other species of fish, the player's fish could come across the following in or above the lake:
+
+Otters, who would eat any fish not making a deep escape (the exception was a Mackinaw Trout, because it can only swim in deep water)
+Ospreys, who would grab any fish not making a deep escape (the exception was a Mackinaw Trout, because it can only swim in deep water)
+Algae (which was only a good food to a Chub; any other fish would find it disgusting if eaten)
+Plankton
+Fishermen, whose presence would not be known unless the player ate a baited Chub or a fisherman's fly concealed as Insects and Larva
+Bottom organisms
+Insects and larva

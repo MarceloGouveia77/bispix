@@ -10,6 +10,7 @@
 				<option value="profissoes">Espaço de Profissões</option>
 				<option value="santa">Santa Cruz</option>
 				<option value="teste">Coleção de Teste</option>
+				<option value="simuladores">Simuladores</option>
 			</select>
 			<br>
 		</div>
