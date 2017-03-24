@@ -121,14 +121,27 @@ class IndiceInvertido extends Model
 
 		return $termoNormalizado;
 	}
-	public static function postings($query)
-	{
-		$postings = IndiceInvertido::select('documento')
-						->where('termo', $query)
-						->distinct()
-						->lists('documento');
-		return $postings;
-	}
+    public static function postings($query)
+    {
+        $postings = IndiceInvertido::select('documento')
+            ->where('termo', $query)
+            ->distinct()
+            ->lists('documento');
+        print_r($postings);
+        return $postings;
+    }
+
+    public static function consultaOR($query1, $query2)
+    {
+        $postings = IndiceInvertido::select('documento')
+            ->where('termo', $query1)
+            ->orwhere('termo',$query2)
+            ->distinct()
+            ->lists('documento');
+        print_r($postings);
+        return $postings;
+    }
+
 	public static function parametros($nomeMetodo)
 	{
 		switch($nomeMetodo){
