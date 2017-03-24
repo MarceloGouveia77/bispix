@@ -19,7 +19,9 @@ class Consulta extends Model
             case 3:
                 return self::consultaLogica($query);
                 break;
-
+            case 2:
+                return self::consultaNOT($query);
+                break;
 		}
 	}
 	private static function consultaSimples($query)
@@ -33,10 +35,17 @@ class Consulta extends Model
             case 'or':
                 return self::consultaOR($entrada[0], $entrada[2]);
                 break;
+            case 'not':
+                break;
         }
     }
 
-	private static function consultaOR($query1, $query2){
+    private static function consultaOR($query1, $query2){
         return IndiceInvertido::consultaOR($query1, $query2);
+    }
+
+    private static function consultaNOT($query1){
+        $entrada = explode(' ', $query1);
+        return IndiceInvertido::consultaNOT($entrada[1]);
     }
 }

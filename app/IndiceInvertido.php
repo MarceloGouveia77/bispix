@@ -142,6 +142,20 @@ class IndiceInvertido extends Model
         return $postings;
     }
 
+    public static function consultaNOT($query1)
+    {
+        $postings = IndiceInvertido::select('documento')
+            ->whereNotIn('documento', function($q) use ($query1){
+                $q->select('documento')
+                    ->from('indice')
+                    ->where('termo',$query1);
+            })
+            ->distinct()
+            ->lists('documento');
+        print_r($postings);
+        return $postings;
+    }
+
 	public static function parametros($nomeMetodo)
 	{
 		switch($nomeMetodo){
