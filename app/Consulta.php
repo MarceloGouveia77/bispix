@@ -35,9 +35,14 @@ class Consulta extends Model
             case 'or':
                 return self::consultaOR($entrada[0], $entrada[2]);
                 break;
-            case 'not':
+            case 'and':
+                return self::consultaAND($entrada[0], $entrada[2]);
                 break;
         }
+    }
+
+    private static function consultaAND($query1, $query2){
+        return IndiceInvertido::consultaAND($query1, $query2);
     }
 
     private static function consultaOR($query1, $query2){

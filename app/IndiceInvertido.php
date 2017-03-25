@@ -156,6 +156,23 @@ class IndiceInvertido extends Model
         return $postings;
     }
 
+    public static function consultaAND($query1, $query2)
+    {
+        $temp = IndiceInvertido::select('documento')
+            ->where('termo', $query1)
+            ->distinct()
+            ->lists('documento')->toArray();
+
+        $temp2 = IndiceInvertido::select('documento')
+            ->where('termo', $query2)
+            ->distinct()
+            ->lists('documento')->toArray();
+        
+        $postings = array_intersect($temp, $temp2);
+        print_r($postings);
+        return $postings;
+    }
+
 	public static function parametros($nomeMetodo)
 	{
 		switch($nomeMetodo){
