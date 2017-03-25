@@ -167,8 +167,28 @@ class IndiceInvertido extends Model
             ->where('termo', $query2)
             ->distinct()
             ->lists('documento')->toArray();
-        
+
         $postings = array_intersect($temp, $temp2);
+        print_r($postings);
+        return $postings;
+    }
+
+    public static function consultaXOR($query1, $query2)
+    {
+        $temp = IndiceInvertido::select('documento')
+            ->where('termo', $query1)
+            ->distinct()
+            ->lists('documento')->toArray();
+
+        $temp2 = IndiceInvertido::select('documento')
+            ->where('termo', $query2)
+            ->distinct()
+            ->lists('documento')->toArray();
+
+        $interseccao = array_intersect($temp, $temp2);
+        $query = array_merge($temp, $temp2);
+        $postings = array_diff($query, $interseccao);
+        
         print_r($postings);
         return $postings;
     }

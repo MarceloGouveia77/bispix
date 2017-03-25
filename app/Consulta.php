@@ -38,6 +38,8 @@ class Consulta extends Model
             case 'and':
                 return self::consultaAND($entrada[0], $entrada[2]);
                 break;
+            case 'xor':
+                return self::consultaXOR($entrada[0], $entrada[2]);
         }
     }
 
@@ -47,6 +49,10 @@ class Consulta extends Model
 
     private static function consultaOR($query1, $query2){
         return IndiceInvertido::consultaOR($query1, $query2);
+    }
+
+    private static function consultaXOR($query1, $query2){
+        return IndiceInvertido::consultaXOR($query1, $query2);
     }
 
     private static function consultaNOT($query1){
