@@ -249,20 +249,80 @@ class IndiceInvertido extends Model
     {
         $query2 = PorterStemmer::Stem($query);
 
-        $postings = IndiceInvertido::select('documento')
-            ->where('termo', $query)
-            ->distinct()
-            ->lists('documento');
-
         $postings = self::consultaOR($query, $query2);
 
         print_r($postings);
         return $postings;
     }
 
-    public static function consultaFrase($query1, $query2)
+    public static function consultaFrase($palavra, $palavra2)
     {
-        return ;
+        $temp = explode('"', $palavra);
+        $palavra = $temp[1];
+
+        $temp2 = explode('"', $palavra2);
+        $palavra2 = $temp2[0];
+
+        $posQuery1 = self::listaPosicao($palavra);
+        $docQuery1 = self::listaDocumento($palavra);
+
+        $posQuery2 = self::listaPosicao($palavra2);
+        $docQuery2 = self::listaDocumento($palavra2);
+
+        $query1_temp = array();
+        $query2_temp = array();
+        $postings = array();
+        $aux = array();
+
+        $tam = count($posQuery1);
+        $tam2 = count($posQuery2);
+
+        for($i=0; $i<$tam; $i++){
+           for($j=0; $j<$tam2; $j++){
+                if($posQuery1[$i] == $posQuery2[$j] - 1){
+                     array_push($query1_temp, $docQuery1[$i]);
+                     array_push($query2_temp, $docQuery2[$j]);
+               }
+           }
+        }
+
+        $tam = count($query1_temp);
+
+        for($i=0; $i<$tam; $i++){
+            if($query1_temp[$i] == $query2_temp[$i]){
+                array_push($aux, $query1_temp[$i]);
+            }
+        }
+
+        foreach ($aux as $array_aux){
+            $igual = false;
+            foreach ($postings as $post){
+                if($array_aux == $post){
+                    $igual = true;
+                    break;
+                }
+            }
+            if(!$igual) {
+                array_push($postings, $array_aux);
+            }
+        }
+        return $postings;
+    }
+
+    public static function listaPosicao($query){
+        $postings = IndiceInvertido::select('posicao')
+            ->where('termo', $query)
+            ->lists('posicao');
+
+        return $postings;
+    }
+
+    public static function listaDocumento($query){
+        $postings = IndiceInvertido::select('documento')
+            ->where('termo', $query)
+            ->lists('documento');
+
+        return $postings;
     }
 
     public static function parametros($nomeMetodo)
