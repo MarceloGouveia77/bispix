@@ -251,7 +251,7 @@ class IndiceInvertido extends Model
 
         $postings = self::consultaOR($query, $query2);
 
-        print_r($postings);
+        print_r($query2);
         return $postings;
     }
 

@@ -9,8 +9,22 @@
 
             <script>
                 function destacar(text) {
-                    var re = new RegExp(text, "g");
+                    var re = new RegExp(text, "ig");
                     documentText.innerHTML = documentText.innerHTML.replace(re, '<span style= "background-color: #3399ff">'+text+'</span>');
+                }
+                function seletor(text){
+                    var consLogica = text.split(' ');
+
+                    if(text[0] == '"'){ // CONSULTA POR FRASE
+                        var aux = text.split('"');
+                        var palavra = aux[1];
+                        destacar(palavra);
+                    }else if(consLogica.length == 3){ // CONSULTAS AND, OR, XOR
+                        destacar(consLogica[0]);
+                        destacar(consLogica[2]);
+                    }else{
+                        destacar(text);
+                    }
                 }
             </script>
 
@@ -25,7 +39,7 @@
 
                     ?>
             <div class="modal-footer">
-                <button type="button" class="btn btn-warning" onclick="destacar('{{$query}}')">DESTACAR AS OCORRENCIAS</button>
+                <button type="button" class="btn btn-warning" onclick="seletor('{{$query}}')">DESTACAR AS OCORRENCIAS</button>
                 <button type="button" class="btn btn-primary" data-dismiss="modal">OK</button>
             </div>
 
