@@ -19,9 +19,18 @@
             </tr>
 
         @endforeach
-        {!! $postings->links() !!}
 
     </table>
+    <div class="panel-footer text-center">
+        <ul class="pagination" style="background-color: #003366;">
+            <li><a href="#">&laquo;</a></li>
+            <li class="active"><a href="#">1</a></li>
+            <li><a href="#">2</a></li>
+            <li style="font-color: black;"><a href="#">3</a></li>
+            <li><a href="#">4</a></li>
+            <li><a href="#">5</a></li>
+            <li><a href="#">&raquo;</a></li>
+        </ul>
 
     </div>
 
