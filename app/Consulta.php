@@ -10,53 +10,56 @@ class Consulta extends Model
     public static function executar($query)
 	{
         $tam = explode(' ', $query);
-        //print_r($tam);
         $tam = count($tam);
         switch ($tam) {
 			case 1:
-				return self::consultaSimples($query);
+				return self::verificaConsulta($query);
 				break;
             case 3:
                 return self::consultaLogica($query);
                 break;
             case 2:
-                return self::consultaNOT($query);
+                return self::verificaConsultaDupla($query);
                 break;
 		}
 	}
-	private static function consultaSimples($query)
-	{
-		return IndiceInvertido::postings($query);
-	}
 
-	private static function consultaLogica($query){
-        $entrada = explode(' ', $query);
-        switch($entrada[1]){
-            case 'or':
-                return self::consultaOR($entrada[0], $entrada[2]);
-                break;
-            case 'and':
-                return self::consultaAND($entrada[0], $entrada[2]);
-                break;
-            case 'xor':
-                return self::consultaXOR($entrada[0], $entrada[2]);
+	private static function verificaConsulta($query){
+        $entrada = explode('!', $query);
+
+        if(strcmp($query[0], '!') == 0){
+            return IndiceInvertido::consultaPorter($entrada[1]);
+        }
+        else{
+            return IndiceInvertido::consultaSimples($query);
         }
     }
 
-    private static function consultaAND($query1, $query2){
-        return IndiceInvertido::consultaAND($query1, $query2);
+    private static function verificaConsultaDupla($query){
+        $entrada = explode(' ', $query);
+        $temp = '"';
+
+        if(strcmp($entrada[0][0], $temp) == 0){
+            return indiceInvertido::consultaFrase($entrada[0], $entrada[1]);
+        }else{
+            return IndiceInvertido::consultaNOT($entrada[1]);
+        }
     }
 
-    private static function consultaOR($query1, $query2){
-        return IndiceInvertido::consultaOR($query1, $query2);
+
+    private static function consultaLogica($query){
+        $entrada = explode(' ', $query);
+
+        switch($entrada[1]){
+            case 'or':
+                return IndiceInvertido::consultaOR($entrada[0], $entrada[2]);
+                break;
+            case 'and':
+                return IndiceInvertido::consultaAND($entrada[0], $entrada[2]);
+                break;
+            case 'xor':
+                return IndiceInvertido::consultaXOR($entrada[0], $entrada[2]);
+        }
     }
 
-    private static function consultaXOR($query1, $query2){
-        return IndiceInvertido::consultaXOR($query1, $query2);
-    }
-
-    private static function consultaNOT($query1){
-        $entrada = explode(' ', $query1);
-        return IndiceInvertido::consultaNOT($entrada[1]);
-    }
 }

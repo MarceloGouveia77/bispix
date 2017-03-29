@@ -21,7 +21,8 @@ class Principal extends Model
 		$data['scriptName'] = 'site.resultados.script';
 		$data['postings'] = Consulta::executar($query);
 
-
+        //$data['postings'] = $data['postings']->paginate(5);
+		//print_r($data['postings']);
         return $data;
 	}
 }

@@ -4,6 +4,9 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Schema;
+use PorterStemmer;
+
+require_once 'PorterStemmer.php';
 
 class IndiceInvertido extends Model
 {
@@ -121,76 +124,59 @@ class IndiceInvertido extends Model
 
 		return $termoNormalizado;
 	}
-    public static function postings($query)
+    public static function consultaSimples($query)
     {
         $postings = IndiceInvertido::select('documento')
             ->where('termo', $query)
             ->distinct()
+            ->paginate(5)
             ->lists('documento');
+
+        print_r($postings);
+        return $postings;
+    }
+
+    public static function consultaPorter($query)
+    {
+        $query2 = PorterStemmer::Stem($query);
+
+        $postings = IndiceInvertido::select('documento')
+            ->where('termo', $query)
+            ->distinct()
+            ->lists('documento');
+
+        $postings = self::consultaOR($query, $query2);
+
         print_r($postings);
         return $postings;
     }
 
     public static function consultaOR($query1, $query2)
     {
-        $postings = IndiceInvertido::select('documento')
-            ->where('termo', $query1)
-            ->orwhere('termo',$query2)
-            ->distinct()
-            ->lists('documento');
-        print_r($postings);
-        return $postings;
+
+        return ;
     }
 
     public static function consultaNOT($query1)
     {
-        $postings = IndiceInvertido::select('documento')
-            ->whereNotIn('documento', function($q) use ($query1){
-                $q->select('documento')
-                    ->from('indice')
-                    ->where('termo',$query1);
-            })
-            ->distinct()
-            ->lists('documento');
-        print_r($postings);
-        return $postings;
+        return ;
     }
 
     public static function consultaAND($query1, $query2)
     {
-        $temp = IndiceInvertido::select('documento')
-            ->where('termo', $query1)
-            ->distinct()
-            ->lists('documento')->toArray();
 
-        $temp2 = IndiceInvertido::select('documento')
-            ->where('termo', $query2)
-            ->distinct()
-            ->lists('documento')->toArray();
-
-        $postings = array_intersect($temp, $temp2);
-        print_r($postings);
-        return $postings;
+        return ;
     }
 
     public static function consultaXOR($query1, $query2)
     {
-        $temp = IndiceInvertido::select('documento')
-            ->where('termo', $query1)
-            ->distinct()
-            ->lists('documento')->toArray();
 
-        $temp2 = IndiceInvertido::select('documento')
-            ->where('termo', $query2)
-            ->distinct()
-            ->lists('documento')->toArray();
+        return ;
+    }
 
-        $interseccao = array_intersect($temp, $temp2);
-        $query = array_merge($temp, $temp2);
-        $postings = array_diff($query, $interseccao);
-        
-        print_r($postings);
-        return $postings;
+    public static function consultaFrase($query1, $query2)
+    {
+        return ;
     }
 
 	public static function parametros($nomeMetodo)
