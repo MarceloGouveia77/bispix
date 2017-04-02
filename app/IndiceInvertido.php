@@ -47,7 +47,7 @@ class IndiceInvertido extends Model
                 while(true) {
                     $linha = fgets($pont);
                     if ($linha==null) break;
-
+                    
                     $termos = explode(' ', $linha);
 
                     foreach($termos as $t){
@@ -125,198 +125,6 @@ class IndiceInvertido extends Model
         return $termoNormalizado;
     }
 
-    public static function listaDocumentos($query)
-    {
-        $postings = IndiceInvertido::select('documento')
-            ->distinct()
-            ->lists('documento');
-
-        return $postings;
-    }
-
-    public static function consultaSimples($query)
-    {
-        $postings = IndiceInvertido::select('documento')
-            ->where('termo', $query)
-            ->distinct()
-            ->lists('documento');
-
-        return $postings;
-    }
-
-    public static function consultaAND($query1, $query2)
-    {
-        $temp = self::consultaSimples($query1);
-        $temp2 = self::consultaSimples($query2);
-
-        $postings = array();
-        foreach ($temp as $t1){
-            foreach ($temp2 as $t2){
-                if($t1 == $t2){
-                    array_push($postings, $t2);
-                }
-            }
-        }
-
-        return $postings;
-    }
-
-    public static function consultaOR($query1, $query2)
-    {
-        $temp = self::consultaSimples($query1);
-        $temp2 = self::consultaSimples($query2);
-
-        $postings = array();
-        foreach ($temp as $t1){
-            array_push($postings, $t1);
-        }
-
-        foreach ($temp2 as $t2){
-            $igual = false;
-            foreach ($postings as $post){
-                if($post == $t2){
-                    $igual = true;
-                    break;
-                }
-            }
-            if(!$igual) {
-                array_push($postings, $t2);
-            }
-        }
-        return $postings;
-    }
-
-    public static function consultaXOR($query1, $query2)
-    {
-        $temp = self::consultaSimples($query1);
-        $temp2 = self::consultaSimples($query2);
-
-        $postings = array();
-
-        foreach ($temp as $t1){
-            $igual = false;
-            foreach ($temp2 as $t2){
-                if($t1 == $t2){
-                    $igual = true;
-                    break;
-                }
-            }
-            if(!$igual) {
-                array_push($postings, $t1);
-            }
-        }
-
-        foreach ($temp2 as $t2){
-            $igual = false;
-            foreach ($temp as $t1){
-                if($t1 == $t2){
-                    $igual = true;
-                    break;
-                }
-            }
-            if(!$igual) {
-                array_push($postings, $t2);
-            }
-        }
-
-        return $postings;
-    }
-
-    public static function consultaNOT($query1)
-    {
-        $docs = self::listaDocumentos($query1);
-        $temp = self::consultaSimples($query1);
-
-        $postings = array();
-
-        foreach ($docs as $doc){
-            $igual = false;
-            foreach ($temp as $t1){
-                if($t1 == $doc){
-                    $igual = true;
-                    break;
-                }
-            }
-            if(!$igual){
-                array_push($postings, $doc);
-            }
-        }
-
-        return $postings;
-    }
-
-    public static function consultaPorter($query)
-    {
-        $query2 = PorterStemmer::Stem($query);
-
-        $postings = self::consultaOR($query, $query2);
-
-        print_r($query2);
-        return $postings;
-    }
-
-    public static function consultaFrase($palavra, $palavra2)
-    {
-        $temp = explode('"', $palavra);
-        $palavra = $temp[1];
-
-        $temp2 = explode('"', $palavra2);
-        $palavra2 = $temp2[0];
-
-        $posQuery1 = self::listaPosicao($palavra);
-        $docQuery1 = self::listaDocumento($palavra);
-
-        $posQuery2 = self::listaPosicao($palavra2);
-        $docQuery2 = self::listaDocumento($palavra2);
-
-        $query1_temp = array();
-        $query2_temp = array();
-        $postings = array();
-        $aux = array();
-
-        $tam = count($posQuery1);
-        $tam2 = count($posQuery2);
-
-        for($i=0; $i<$tam; $i++){
-           for($j=0; $j<$tam2; $j++){
-                if($posQuery1[$i] == $posQuery2[$j] - 1){
-                     array_push($query1_temp, $docQuery1[$i]);
-                     array_push($query2_temp, $docQuery2[$j]);
-               }
-           }
-        }
-
-        $tam = count($query1_temp);
-
-        for($i=0; $i<$tam; $i++){
-            if($query1_temp[$i] == $query2_temp[$i]){
-                array_push($aux, $query1_temp[$i]);
-            }
-        }
-
-        foreach ($aux as $array_aux){
-            $igual = false;
-            foreach ($postings as $post){
-                if($array_aux == $post){
-                    $igual = true;
-                    break;
-                }
-            }
-            if(!$igual) {
-                array_push($postings, $array_aux);
-            }
-        }
-        return $postings;
-    }
-
-    public static function listaPosicao($query){
-        $postings = IndiceInvertido::select('posicao')
-            ->where('termo', $query)
-            ->lists('posicao');
-
-        return $postings;
-    }
-
     public static function listaDocumento($query){
         $postings = IndiceInvertido::select('documento')
             ->where('termo', $query)
@@ -345,6 +153,7 @@ class IndiceInvertido extends Model
                 break;
         }
     }
+
     private static function parametrosPasso1()
     {
         self::prepararBanco();
@@ -361,6 +170,7 @@ class IndiceInvertido extends Model
 
         return $data;
     }
+
     private static function parametrosPasso2()
     {
         $data['viewName'] = 'site.gerar-indice.index';
@@ -375,6 +185,7 @@ class IndiceInvertido extends Model
 
         return $data;
     }
+
     private static function parametrosPasso3()
     {
         $data['viewName'] = 'site.gerar-indice.index';
@@ -389,6 +200,7 @@ class IndiceInvertido extends Model
 
         return $data;
     }
+
     private static function parametrosPasso4()
     {
         $data['viewName'] = 'site.gerar-indice.index';
@@ -403,6 +215,7 @@ class IndiceInvertido extends Model
 
         return $data;
     }
+
     private static function parametrosFim()
     {
         $data['viewName'] = 'site.gerar-indice.index';
@@ -416,5 +229,223 @@ class IndiceInvertido extends Model
         $data['panelIcon'] = 'ok';
 
         return $data;
+    }
+
+    public static function listaDocumentos()
+    {
+        $postings = IndiceInvertido::select('documento')
+            ->distinct()
+            ->lists('documento');
+
+        return $postings;
+    }
+
+    public static function listaPosicao($query){
+        $postings = IndiceInvertido::select('posicao')
+            ->where('termo', $query)
+            ->lists('posicao');
+
+        return $postings;
+    }
+
+    public static function intersecao($temp, $temp2){
+        $postings = array();
+
+        $tam = count($temp);
+        $tam2 = count($temp2);
+
+        $i = 0;
+        $j = 0;
+
+        while($i < $tam && $j < $tam2){
+            if($temp[$i] < $temp2[$j])
+                $i++;
+            else if($temp2[$j] < $temp[$i])
+                $j++;
+            else{
+                array_push($postings, $temp2[$j]);
+                $i++;
+                $j++;
+            }
+        }
+        return $postings;
+    }
+    public static function consultaSimples($query)
+    {
+        $postings = IndiceInvertido::select('documento')
+            ->where('termo', $query)
+            ->distinct()
+            ->lists('documento');
+
+        return $postings;
+    }
+    public static function consultaAND($query1, $query2)
+    {
+        $palavra1 = self::consultaSimples($query1);
+        $palavra2 = self::consultaSimples($query2);
+
+        $postings = self::intersecao($palavra1, $palavra2);
+        return $postings;
+    }
+    public static function consultaOR($query1, $query2)
+    {
+        $temp = self::consultaSimples($query1);
+        $temp2 = self::consultaSimples($query2);
+
+        $postings = array();
+
+        $tam = count($temp);
+        $tam2 = count($temp2);
+
+        $i = 0;
+        $j = 0;
+
+        while(($i < $tam) || ($j < $tam2)){
+            if($i<$tam && $j<$tam2) {
+                if ($temp[$i] < $temp2[$j]) {
+                    array_push($postings, $temp[$i]);
+                    $i++;
+                } else if ($temp2[$j] < $temp[$i]) {
+                    array_push($postings, $temp2[$j]);
+                    $j++;
+                } else {
+                    array_push($postings, $temp2[$j]);
+                    $i++;
+                    $j++;
+                }
+            }
+            else if($i < $tam && $j >= $tam2){
+                array_push($postings, $temp[$i]);
+                $i++;
+            }
+            else if($i >= $tam && $j < $tam2){
+                array_push($postings, $temp2[$j]);
+                $j++;
+            }
+        }
+        print_r($postings);
+        return $postings;
+    }
+    public static function consultaXOR($query1, $query2)
+    {
+        $temp = self::consultaSimples($query1);
+        $temp2 = self::consultaSimples($query2);
+
+        $postings = array();
+        $tam = count($temp);
+        $tam2 = count($temp2);
+
+        $i = 0;
+        $j = 0;
+
+        while(($i < $tam) || ($j < $tam2)){
+            if($i<$tam && $j<$tam2) {
+                if ($temp[$i] < $temp2[$j]) {
+                    array_push($postings, $temp[$i]);
+                    $i++;
+                } else if ($temp2[$j] < $temp[$i]) {
+                    array_push($postings, $temp2[$j]);
+                    $j++;
+                } else {
+                    $i++;
+                    $j++;
+                }
+            }
+            else if($i < $tam && $j >= $tam2){
+                array_push($postings, $temp[$i]);
+                $i++;
+            }
+            else if($i >= $tam && $j < $tam2){
+                array_push($postings, $temp2[$j]);
+                $j++;
+            }
+        }
+
+        return $postings;
+    }
+
+    public static function consultaNOT($query1)
+    {
+        $arrayDocs = self::listaDocumentos();
+        $temp = self::consultaSimples($query1);
+
+        $postings = array();
+        $i = 0;
+        $j = 0;
+        $tam = count($arrayDocs);
+        $tam2 = count($temp);
+
+        while($i < $tam){
+            if($j < $tam2){
+                if($arrayDocs[$i] < $temp[$j]) {
+                    array_push($postings, $arrayDocs[$i]);
+                    $i++;
+                }
+                else if($temp[$j] < $arrayDocs[$i])
+                    $j++;
+                else{
+                    $i++;
+                    $j++;
+                }
+            }else if($j >= $tam2){
+                array_push($postings, $arrayDocs[$i]);
+                $i++;
+            }
+        }
+
+        print_r($arrayDocs);
+        return $postings;
+    }
+
+    public static function consultaPorter($query)
+    {
+        $query2 = PorterStemmer::Stem($query);
+
+        $postings = self::consultaOR($query, $query2);
+
+        print_r($query2);
+        return $postings;
+    }
+
+    public static function consultaFrase($palavra, $palavra2)
+    {
+        $postings = array();
+        $temp = explode('"', $palavra);
+        $palavra = $temp[1];
+
+        $temp2 = explode('"', $palavra2);
+        $palavra2 = $temp2[0];
+
+        $posQuery1 = self::listaPosicao($palavra);
+        $docQuery1 = self::listaDocumento($palavra);
+
+        $posQuery2 = self::listaPosicao($palavra2);
+        $docQuery2 = self::listaDocumento($palavra2);
+
+        $tamPos = count($posQuery1);
+        $tamPos2 = count($posQuery2);
+
+        $docsTemp = array();
+
+        for($i = 0; $i<$tamPos; $i++){
+            for($j = 0; $j<$tamPos2; $j++){
+                if(($posQuery1[$i] == $posQuery2[$j] - 1) && ($docQuery1[$i] == $docQuery2[$j]))
+                    array_push($docsTemp, $docQuery1[$i]);
+            }
+        }
+
+        foreach($docsTemp as $doc){
+            $igual = false;
+            foreach($postings as $post){
+                if($doc == $post) {
+                    $igual = true;
+                    break;
+                }
+            }
+            if(!$igual)
+                array_push($postings, $doc);
+        }
+
+        return $postings;
     }
 }
