@@ -48,10 +48,9 @@ class IndiceInvertido extends Model
                     $linha = fgets($pont);
                     if ($linha==null) break;
                     
-                    $termos = explode(' ', $linha);
-
+                    $termos = preg_split("/[\s-]+/",$linha);
+                    
                     foreach($termos as $t){
-
                         $tripla = new IndiceInvertido;
                         $valor = trim($t);
 

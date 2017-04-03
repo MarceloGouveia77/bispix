@@ -1,0 +1,11 @@
+﻿Flight Simulator 1.0[edit]
+
+FS 1.0 – This image is of FS 1.0 displaying color on a composite monitor.[7] The game does have support for RGB monitors, but in monochrome only.
+- November 1982[2]
+Sometime during 1981-82, Microsoft obtained the license to port the simulator to IBM compatibles PCs. This version was released in November 1982 as Microsoft Flight Simulator, and featured an improved graphics engine, variable weather and time of day, and a new coordinate system (used by all subsequent versions up to version 5).
+
+Advertisements claimed "If flying your IBM PC got any more realistic, you'd need a license", and promised "a full-color, out-the-window flight display".[8] Early versions of Microsoft Flight Simulator were used as a test for PC compatibility. If a computer could run MSFS 1.0 and Lotus 1-2-3, it was 100% IBM PC-compatible, and if it could not, it was not.[9][10][11][12][13][14][15]
+
+Compatibility difficulty included the unusual use of the x86 assembly DIV command, where a "DIVIDE BY ZERO" command would be issued every time a screen refresh was needed. This technique often required hardware changes to assure compatibility with MSFS 1.0 software.[citation needed]
+
+There was a dogfight mode with the Sopwith Camel and crop-dusting mode included.
