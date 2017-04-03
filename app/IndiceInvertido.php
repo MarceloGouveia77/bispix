@@ -122,6 +122,7 @@ class IndiceInvertido extends Model
         $termoNormalizado = str_replace($simbolosRemocao, "", $termo);
         $termoNormalizado = mb_strtolower($termoNormalizado);
 
+
         return $termoNormalizado;
     }
 
@@ -275,8 +276,8 @@ class IndiceInvertido extends Model
         $postings = IndiceInvertido::select('documento')
             ->where('termo', $query)
             ->distinct()
-            ->lists('documento');
-
+            ->lists('documento')
+            ;
         return $postings;
     }
     public static function consultaAND($query1, $query2)

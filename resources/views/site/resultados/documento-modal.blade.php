@@ -39,7 +39,7 @@
 
                     ?>
             <div class="modal-footer">
-                <button type="button" class="btn btn-warning" onclick="seletor('{{$query}}')">DESTACAR AS OCORRENCIAS</button>
+              <button type="button" class="btn btn" onclick="seletor('{{$query}}')">DESTACAR AS OCORRENCIAS</button>
                 <button type="button" class="btn btn-primary" data-dismiss="modal">OK</button>
             </div>
 
