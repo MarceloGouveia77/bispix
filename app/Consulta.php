@@ -21,6 +21,12 @@ class Consulta extends Model
             case 2:
                 return self::verificaConsultaDupla($query);
                 break;
+            case 4:
+                return self::verificaConsultaQuadrupla($query);
+                break;
+            case 5:
+                return IndiceInvertido::notTermoBinNotTermo($query);
+                break;
 		}
 	}
 
@@ -60,6 +66,23 @@ class Consulta extends Model
             case 'xor':
                 return IndiceInvertido::consultaXOR($entrada[0], $entrada[2]);
         }
+    }
+
+    private static function verificaConsultaQuadrupla($query){
+        $entrada = explode(' ', $query);
+
+        if($entrada[0] == 'not' && $entrada[1][0] != '('){
+            return IndiceInvertido::notTermoBinTermo($query);
+        }
+        else if($entrada[0] == 'not' && $entrada[1][0] == '('){
+            return IndiceInvertido::notParenteseBin($query);
+        }
+        else if($entrada[2] == 'not'){
+            return IndiceInvertido::termoBinNotTermo($query);
+        }else{
+            return "ERRO";
+        }
+        return $query;
     }
 
 }

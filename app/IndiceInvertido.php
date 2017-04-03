@@ -280,18 +280,27 @@ class IndiceInvertido extends Model
             ;
         return $postings;
     }
-    public static function consultaAND($query1, $query2)
+    public static function consultaAND($query1, $query2) // EXEMPLO -> player and game
     {
-        $palavra1 = self::consultaSimples($query1);
-        $palavra2 = self::consultaSimples($query2);
-
-        $postings = self::intersecao($palavra1, $palavra2);
-        return $postings;
-    }
-    public static function consultaOR($query1, $query2)
-    {
+        if(is_numeric($query1[0])){
+            $temp = $query1;
+            $temp2 = $query2;
+        }else{
         $temp = self::consultaSimples($query1);
         $temp2 = self::consultaSimples($query2);
+        }
+
+        $postings = self::intersecao($temp, $temp2);
+        return $postings;
+    }
+    public static function consultaOR($query1, $query2) // EXEMPLO -> fifa or pes
+    {   if(is_numeric($query1[0])){
+            $temp = $query1;
+            $temp2 = $query2;
+        }else{
+        $temp = self::consultaSimples($query1);
+        $temp2 = self::consultaSimples($query2);
+        }
 
         $postings = array();
 
@@ -324,13 +333,17 @@ class IndiceInvertido extends Model
                 $j++;
             }
         }
-        print_r($postings);
         return $postings;
     }
-    public static function consultaXOR($query1, $query2)
+    public static function consultaXOR($query1, $query2) // EXEMPLO -> sims xor fifa
     {
+        if(is_numeric($query1[0])){
+            $temp = $query1;
+            $temp2 = $query2;
+        }else{
         $temp = self::consultaSimples($query1);
         $temp2 = self::consultaSimples($query2);
+        }
 
         $postings = array();
         $tam = count($temp);
@@ -365,10 +378,15 @@ class IndiceInvertido extends Model
         return $postings;
     }
 
-    public static function consultaNOT($query1)
+    public static function consultaNOT($query1) // EXEMPLO -> not sims
     {
+        if(is_numeric($query1[0])){
+            $temp = $query1;
+        }else{
+        $temp = self::consultaSimples($query1);
+        }
+
         $arrayDocs = self::listaDocumentos();
-        $temp = self::consultaSimples($query1);
 
         $postings = array();
         $i = 0;
@@ -394,11 +412,10 @@ class IndiceInvertido extends Model
             }
         }
 
-        print_r($arrayDocs);
         return $postings;
     }
 
-    public static function consultaPorter($query)
+    public static function consultaPorter($query) // EXEMPLO -> !working
     {
         $query2 = PorterStemmer::Stem($query);
 
@@ -408,8 +425,7 @@ class IndiceInvertido extends Model
         return $postings;
     }
 
-    public static function consultaFrase($palavra, $palavra2)
-    {
+    public static function consultaFrase($palavra, $palavra2){ // EXEMPLO -> "the sims"
         $postings = array();
         $temp = explode('"', $palavra);
         $palavra = $temp[1];
@@ -448,5 +464,109 @@ class IndiceInvertido extends Model
         }
 
         return $postings;
+    }
+
+    public static function notTermoBinTermo($query){ // EXEMPLO -> not fifa and pes
+        $entrada = explode(' ', $query);
+
+        $arrayQuery = self::consultaSimples($entrada[3]);
+        $arrayNOT = self::consultaNOT($entrada[1]);
+        
+        switch ($entrada[2]) {
+            case 'and':
+                $postings = self::consultaAND($arrayNOT, $arrayQuery);
+                break;
+            case 'or':
+                $postings = self::consultaOR($arrayNOT, $arrayQuery);
+                break;
+            case 'xor':
+                $postings = self::consultaXOR($arrayNOT, $arrayQuery);
+                break;
+            default:
+                return "ERRO";
+                break;
+        }
+
+        return $postings;
+    }
+
+    public static function notParenteseBin($query){ // EXEMPLO -> not(fifa and pes)
+        $entrada = explode(' ', $query);
+        $palavra1 = explode('(', $entrada[1])[1];
+        $palavra2 = explode(')', $entrada[3])[0];
+
+        switch ($entrada[2]) {
+            case 'and':
+                $arrayAux = self::consultaAND($palavra1, $palavra2);
+                break;
+            case 'or':
+                $arrayAux = self::consultaOR($palavra1, $palavra2);
+                break;
+            case 'xor':
+                $arrayAux = self::consultaXOR($palavra1, $palavra2);
+                break;
+            default:
+                return "erro";
+                break;
+        }
+
+        $postings = self::consultaNOT($arrayAux);
+
+        return $postings;
+    }
+
+    public static function termoBinNotTermo($query){ // EXEMPLO -> fifa and not pes
+        $entrada = explode(' ', $query);
+        $palavra1 = $entrada[0];
+        $palavra2 = $entrada[3];
+
+        $arrayQuery = self::consultaSimples($palavra1);
+        $arrayNOT = self::consultaNOT($palavra2);
+
+
+        print_r($arrayQuery);
+        print_r($arrayNOT);
+        switch ($entrada[1]) {
+            case 'and':
+                $postings = self::consultaAND($arrayQuery, $arrayNOT);
+                break;
+            case 'or':
+                $postings = self::consultaOR($arrayQuery, $arrayNOT);
+                break;
+            case 'xor':
+                $postings = self::consultaXOR($arrayQuery, $arrayNOT);
+                break;
+            default:
+                return "erro";
+                break;
+        }
+
+        return $postings;   
+    }
+
+    public static function notTermoBinNotTermo($query){ // EXEMPLO -> not game and not player
+        $entrada = explode(' ', $query);
+        $palavra1 = $entrada[1];
+        $palavra2 = $entrada[4];
+
+        $arrayNOT = self::consultaNOT($palavra1);
+        $arrayNOT2 = self::consultaNOT($palavra2);
+
+        switch ($entrada[2]) {
+            case 'and':
+                $postings = self::consultaAND($arrayNOT, $arrayNOT2);
+                break;
+            case 'or':
+                $postings = self::consultaOR($arrayNOT, $arrayNOT2);
+                break;
+            case 'xor':
+                $postings = self::consultaXOR($arrayNOT, $arrayNOT2);
+                break;
+            default:
+                return "erro";
+                break;
+        }
+
+        return $postings;   
     }
 }
